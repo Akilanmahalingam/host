@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <%- include('partials/head.ejs') %>
+</head>
+
+<body>
+        <%= title %>
+        
+        <%- include('partials/nav.ejs') %>
+        <div class="details">
+            <h2><%= blog.title %></h2>
+            <h4><%= blog.body %></h4>
+            <!-- <a class="delete" data-doc="<%= blog._id %>">delete</a> -->
+            <a class="delete" data-doc="<%= blog._id %>" style="color: red; cursor: pointer;">delete</a>
+            
+        </div>
+
+        <!-- <a class="delete" data-doc="<%= blog._id %>">DELETE</a> -->
+
+        <%- include('partials/foot.ejs') %>
+
+        <script>
+            const trash=document.querySelector('a.delete')
+
+            trash.addEventListener('click' ,(e) => {
+
+                const endpoint=`/blogs/${trash.dataset.doc}`;
+
+                fetch(endpoint,{
+                    method:'DELETE'
+                })
+                .then( (response) => {
+                    return response.json()
+                })
+                .then( (data) => {
+                    window.location.href=data.redirect;
+                })
+                .catch( (error) => {
+                    console.log(error)
+                })
+
+            })
+        </script>
+
+
+        
+</body>
+
+</html>
+
+
+
